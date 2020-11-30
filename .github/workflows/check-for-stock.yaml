@@ -1,0 +1,13 @@
+name: Check for stock https://bit.ly/3qg4cwM
+
+on:
+  schedule:
+    - cron:  '*/5 * * * *'
+
+jobs:
+  check-for-stock:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check for stock https://www.boden.co.uk/en-gb/rothesay-fair-isle-cardigan-ecru-rainbow-chevron/sty-k0410-ecr
+        run: curl 'https://www.boden.co.uk/api/stock/v1/styles?market=UK&language=en-gb&id=k0410' | jq '.K0410[].stockStatus' | grep -v '"OutOfStock"' | ( ! grep '.' --quiet)
