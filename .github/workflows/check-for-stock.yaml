@@ -1,8 +1,6 @@
 name: Check for stock https://bit.ly/3qg4cwM
 
-on:
-  schedule:
-    - cron:  '*/5 * * * *'
+on: [workflow_dispatch]
 
 jobs:
   check-for-stock:
