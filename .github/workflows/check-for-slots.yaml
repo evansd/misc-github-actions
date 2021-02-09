@@ -1,0 +1,18 @@
+name: Check for slots
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron:  '*/5 * * * *'
+
+jobs:
+  check-for-stock:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install requirements
+        run: python3 -m pip install -r check_for_slots/requirements.txt
+      - name: Check for slots
+        run: python3 check_for_slots/check_for_slots.py
