@@ -13,4 +13,4 @@ jobs:
       - name: Install requirements
         run: python3 -m pip install -r check_for_slots/requirements.txt
       - name: Check for slots
-        run: python3 check_for_slots/check_for_slots.py
+        run: python3 check_for_slots/action.py
