@@ -1,0 +1,38 @@
+---
+name: "Create PR to update `external_studies` test code"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  "*/5 * * * *"
+
+jobs:
+  create_external_studies_pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Update vendored copies of external study code
+        run: |
+          python3 test_external_studies.py update
+          date > external_studies/date.txt
+
+      - name: Create a Pull Request if there are any changes
+        id: create_pr
+        uses: peter-evans/create-pull-request@2b011faafdcbc9ceb11414d64d0573f37c774b04
+        with:
+          add-paths: external_studies/*
+          branch: bot/update-external-studies
+          base: main
+          commit-message: "chore: Update `external_studies` test code"
+          title: "Update `external_studies` test code"
+          body: ""
+
+      # The PR will still require manual approval, this just reduces it to a one-click process
+      - name: Enable automerge
+        if: steps.create_pr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@60812ab1c2c6c6a8932b4d6e059becafaf386256
+        with:
+          pull-request-number: ${{ steps.create_pr.outputs.pull-request-number }}
+          merge-method: squash
