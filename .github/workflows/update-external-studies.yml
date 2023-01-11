@@ -2,9 +2,7 @@
 name: "Create PR to update `external_studies` test code"
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron:  "*/5 * * * *"
+  workflow_dispatch: {}
 
 jobs:
   create_external_studies_pr:
